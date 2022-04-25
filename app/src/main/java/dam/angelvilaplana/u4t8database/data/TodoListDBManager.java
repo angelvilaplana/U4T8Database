@@ -3,7 +3,7 @@ package dam.angelvilaplana.u4t8database.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase;
 import dam.angelvilaplana.u4t8database.model.Task;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class TodoListDBManager {
      */
     public void insert(String todo, String when, String description, int priority, int status) {
         // Open database to read and write
-        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase(TodoListDBContract.DB_PASSWD);
 
         if (sqLiteDatabase != null) {
             ContentValues contentValues = getContentValues(todo, when, description, priority, status);
@@ -43,7 +43,7 @@ public class TodoListDBManager {
      */
     public void update(String todo, String when, String description, int priority, int status, int id) {
         // Open database to read and write
-        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase(TodoListDBContract.DB_PASSWD);
         String whereClause = TodoListDBContract.Tasks._ID + " = " + id;
 
         if (sqLiteDatabase != null) {
@@ -57,7 +57,7 @@ public class TodoListDBManager {
      */
     public void delete(int id) {
         // Open database to read and write
-        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase(TodoListDBContract.DB_PASSWD);
         String whereClause = TodoListDBContract.Tasks._ID + " = " + id;
 
         if (sqLiteDatabase != null) {
@@ -70,7 +70,7 @@ public class TodoListDBManager {
      */
     public int deleteCompleted() {
         // Open database to read and write
-        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase(TodoListDBContract.DB_PASSWD);
         String whereClause = TodoListDBContract.Tasks.STATUS + " = " + 2;
 
         if (sqLiteDatabase != null) {
@@ -85,7 +85,7 @@ public class TodoListDBManager {
      */
     public int deleteAll() {
         // Open database to read and write
-        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getWritableDatabase(TodoListDBContract.DB_PASSWD);
 
         if (sqLiteDatabase != null) {
             return sqLiteDatabase.delete(TodoListDBContract.Tasks.TABLE_NAME, null, null);
@@ -116,7 +116,7 @@ public class TodoListDBManager {
         ArrayList<Task> taskList = new ArrayList<>();
 
         // Open database to read
-        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = todoListDBHelper.getReadableDatabase(TodoListDBContract.DB_PASSWD);
 
         if (sqLiteDatabase != null) {
             String[] projection = new String[] {

@@ -1,8 +1,8 @@
 package dam.angelvilaplana.u4t8database.data;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 /**
  * Create the database (tables, indexes, initial data, etc.)
@@ -33,10 +33,12 @@ public class TodoListDBHelper extends SQLiteOpenHelper {
      */
     public TodoListDBHelper(Context context) {
         super(context, TodoListDBContract.DB_NAME, null, TodoListDBContract.DB_VERSION);
+        SQLiteDatabase.loadLibs(context);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sql) {
+        sql.changePassword(TodoListDBContract.DB_PASSWD);
         sql.execSQL(TodoListDBContract.Tasks.CREATE_TABLE);
     }
 

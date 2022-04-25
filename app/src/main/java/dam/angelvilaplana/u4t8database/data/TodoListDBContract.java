@@ -10,6 +10,9 @@ public class TodoListDBContract {
     // Database Name
     public static final String DB_NAME = "TODOLIST.DB";
 
+    // Password Database
+    public static final String DB_PASSWD = "H3LL0_W0RLD_C1P_FP_B4TO1";
+
     // Database Version
     public static final int DB_VERSION = 1;
 
